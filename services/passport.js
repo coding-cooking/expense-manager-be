@@ -32,13 +32,15 @@ passport.use(
 		async (accessToken, refreshToken, profile, done) => {
 			try {
 				const user = await User.findOne({ githubId: profile.id });
+                console.log(profile.displayName, profile.email, profile.id);
 
 				if (user) {
 					return done(null, user);
 				} else {
+                    const name = profile.displayName || profile.username || "Anonymous";
 					const newUser = new User({
 						email: profile.email,
-						name: profile.displayName,
+						name: name,
 						githubId: profile.id,
 					});
 

@@ -16,7 +16,7 @@ const getUserController = (req, res) => {
 };
 
 const githubLoginController = (req, res) => {
-	res.redirect("/");
+	res.redirect("http://localhost:3002");
 };
 
 module.exports = {
