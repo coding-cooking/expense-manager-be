@@ -1,1 +1,3 @@
-GET http://localhost:5005/authorized
+GET http://localhost:5005/redirect
+
+

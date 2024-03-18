@@ -2,12 +2,12 @@ const passport = require("passport");
 const GithubStrategy = require("passport-github2");
 
 const User = require("../models/User");
-
-const {
-	GITHUB_CLIENT_ID,
-	GITHUB_CLIENT_SECRET,
-	GITHUB_CALLBACK_URL,
-} = require("../config");
+require("dotenv").config();
+// const {
+// 	GITHUB_CLIENT_ID,
+// 	GITHUB_CLIENT_SECRET,
+// 	GITHUB_CALLBACK_URL,
+// } = require("../config");
 
 passport.serializeUser((user, done) => {
 	done(null, user._id);
@@ -25,19 +25,21 @@ passport.deserializeUser(async (id, done) => {
 passport.use(
 	new GithubStrategy(
 		{
-			clientID: GITHUB_CLIENT_ID,
-			clientSecret: GITHUB_CLIENT_SECRET,
-			callbackURL: GITHUB_CALLBACK_URL,
+			clientID: process.env.GITHUB_CLIENT_ID,
+			clientSecret: process.env.GITHUB_CLIENT_SECRET,
+			callbackURL: process.env.GITHUB_CALLBACK_URL,
 		},
 		async (accessToken, refreshToken, profile, done) => {
 			try {
 				const user = await User.findOne({ githubId: profile.id });
-                console.log(profile.displayName, profile.email, profile.id);
-
+				// console.log(profile.displayName, profile.email, profile.id);
+				console.log("21212121", accessToken, refreshToken);
 				if (user) {
+					console.log("-----user", user);
 					return done(null, user);
 				} else {
-                    const name = profile.displayName || profile.username || "Anonymous";
+					console.log("hereeeeeee");
+					const name = profile.displayName || profile.username || "Anonymous";
 					const newUser = new User({
 						email: profile.email,
 						name: name,
