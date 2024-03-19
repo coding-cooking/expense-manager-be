@@ -32,7 +32,7 @@ app.use(passport.session());
 app.use("/api/auth", AuthRoute);
 app.use(
 	cors({
-		origin: "http://localhost:3001",
+		origin: "http://localhost:3000",
 		credentials: true,
 	})
 );
